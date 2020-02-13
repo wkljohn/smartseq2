@@ -47,7 +47,7 @@
     - [`--plaintext_email`](#--plaintext_email)
     - [`--monochrome_logs`](#--monochrome_logs)
     - [`--multiqc_config`](#--multiqc_config)
-    <!-- TOC END -->
+      <!-- TOC END -->
 
 ## Introduction
 
@@ -109,18 +109,18 @@ They are loaded in sequence, so later profiles can overwrite earlier profiles.
 
 If `-profile` is not specified, the pipeline will run locally and expect all software to be installed and available on the `PATH`. This is _not_ recommended.
 
-* `conda`
-  * A generic configuration profile to be used with [conda](https://conda.io/docs/)
-  * Pulls most software from [Bioconda](https://bioconda.github.io/)
-* `docker`
-  * A generic configuration profile to be used with [Docker](http://docker.com/)
-  * Pulls software from dockerhub: [`nfcore/smartseq2`](http://hub.docker.com/r/nfcore/smartseq2/)
-* `singularity`
-  * A generic configuration profile to be used with [Singularity](http://singularity.lbl.gov/)
-  * Pulls software from DockerHub: [`nfcore/smartseq2`](http://hub.docker.com/r/nfcore/smartseq2/)
-* `test`
-  * A profile with a complete configuration for automated testing
-  * Includes links to test data so needs no other parameters
+- `conda`
+  - A generic configuration profile to be used with [conda](https://conda.io/docs/)
+  - Pulls most software from [Bioconda](https://bioconda.github.io/)
+- `docker`
+  - A generic configuration profile to be used with [Docker](http://docker.com/)
+  - Pulls software from dockerhub: [`nfcore/smartseq2`](http://hub.docker.com/r/nfcore/smartseq2/)
+- `singularity`
+  - A generic configuration profile to be used with [Singularity](http://singularity.lbl.gov/)
+  - Pulls software from DockerHub: [`nfcore/smartseq2`](http://hub.docker.com/r/nfcore/smartseq2/)
+- `test`
+  - A profile with a complete configuration for automated testing
+  - Includes links to test data so needs no other parameters
 
 <!-- TODO nf-core: Document required command line parameters -->
 
@@ -156,14 +156,14 @@ There are 31 different species supported in the iGenomes references. To run the 
 
 You can find the keys to specify the genomes in the [iGenomes config file](../conf/igenomes.config). Common genomes that are supported are:
 
-* Human
-  * `--genome GRCh37`
-* Mouse
-  * `--genome GRCm38`
-* _Drosophila_
-  * `--genome BDGP6`
-* _S. cerevisiae_
-  * `--genome 'R64-1-1'`
+- Human
+  - `--genome GRCh37`
+- Mouse
+  - `--genome GRCm38`
+- _Drosophila_
+  - `--genome BDGP6`
+- _S. cerevisiae_
+  - `--genome 'R64-1-1'`
 
 > There are numerous others - check the config file for more.
 
@@ -285,6 +285,7 @@ Can be either of
 
 Defaults to `symlink`. This implies that deleting the `work` directory will
 also remove your result files.
+
 ### `--email_on_fail`
 
 This works exactly as with `--email`, except emails are only sent if the workflow is not successful.
@@ -366,7 +367,7 @@ Should be a string in the format integer-unit. eg. `--max_cpus 1`
 
 Set to receive plain-text e-mails instead of HTML formatted.
 
-### `--monochrome_logs` 
+### `--monochrome_logs`
 
 Set to disable colourful command line output and live life in monochrome.
 
