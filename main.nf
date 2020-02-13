@@ -260,6 +260,7 @@ if (!params.skip_transcriptomics) {
 if (!params.skip_rsem && !params.skip_transcriptomics) {
     if (!params.rsem_ref && fasta && gtf) {
         process make_rsem_reference {
+            label "mid_memory"
             publishDir path: { params.save_reference ? "${params.outdir}/reference_genome" : params.outdir },
                         saveAs: { params.save_reference ? it : null }, mode: "$mode"
             input:
@@ -324,6 +325,7 @@ if (!params.skip_transcriptomics) {
     * Step 2 - STAR
     */
     process STAR {
+        label "mid_memory"
         publishDir "$outdir/STAR/${sample_fq}_STAR", mode: "$mode"
         input:
             set sample_fq, file(in_fastq) from read_files_star
@@ -541,6 +543,7 @@ if (!params.skip_tracer) {
         * Step 7 - run TraCeR
         */
         process TraCeR{
+            label "tracer"
             publishDir "$outdir/TraCeR", mode: "$mode"
 
             input:
@@ -561,6 +564,7 @@ if (!params.skip_tracer) {
         * Step 8 - summarize TraCeR results
         */
         process TCR_summary{
+            label "tracer"
             publishDir "$outdir/TraCeR", mode: "$mode"
 
             input:
@@ -586,6 +590,7 @@ if (!params.skip_bracer) {
         * Step 9 - run BraCeR
         */
         process BraCeR{
+            label "bracer"
             publishDir "$outdir/BraCeR", mode: "$mode"
 
             input:
@@ -606,6 +611,7 @@ if (!params.skip_bracer) {
         * Step 10 - summarize BraCeR results
         */
         process BCR_summary{
+            label "bracer"
             publishDir "$outdir/BraCeR", mode: "$mode"
 
             input:
