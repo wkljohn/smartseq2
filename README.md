@@ -1,4 +1,4 @@
-# nf-core/smartseq
+# nf-core/smartseq2
 
 **Preprocess scRNA-seq data generated with the SmartSeq2 protocol.**.
 
