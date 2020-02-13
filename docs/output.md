@@ -1,10 +1,11 @@
-# nf-core/smartseq: Output
+# nf-core/smartseq2: Output
 
 This document describes the output produced by the pipeline. Most of the plots are taken from the MultiQC report, which summarises results at the end of the pipeline.
 
+<<<<<<< HEAD
 ## Table of contents
 
-- [nf-core/smartseq: Output](#nf-coresmartseq-output)
+- [nf-core/smartseq2: Output](#nf-coresmartseq2-output)
   - [Table of contents](#table-of-contents)
   - [Pipeline overview](#pipeline-overview)
   - [FastQC](#fastqc)
@@ -14,14 +15,22 @@ This document describes the output produced by the pipeline. Most of the plots a
   - [STAR](#star)
   - [RSEM](#rsem)
   - [featureCounts](#featurecounts)
+=======
+<!-- TODO nf-core: Write this documentation describing your workflow's output -->
+>>>>>>> TEMPLATE
 
 ## Pipeline overview
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/)
 and processes data using the following steps:
 
+<<<<<<< HEAD
 - [FastQC](#fastqc) - read quality control
 - [MultiQC](#multiqc) - aggregate report, describing results of the whole pipeline
+=======
+* [FastQC](#fastqc) - read quality control
+* [MultiQC](#multiqc) - aggregate report, describing results of the whole pipeline
+>>>>>>> TEMPLATE
 
 ## FastQC
 
@@ -33,10 +42,17 @@ For further reading and documentation see the [FastQC help](http://www.bioinform
 
 **Output directory: `results/fastqc`**
 
+<<<<<<< HEAD
 - `sample_fastqc.html`
   - FastQC report, containing quality metrics for your untrimmed raw fastq files
 - `zips/sample_fastqc.zip`
   - zip file containing the FastQC report, tab-delimited data file and plot images
+=======
+* `sample_fastqc.html`
+  * FastQC report, containing quality metrics for your untrimmed raw fastq files
+* `zips/sample_fastqc.zip`
+  * zip file containing the FastQC report, tab-delimited data file and plot images
+>>>>>>> TEMPLATE
 
 ## MultiQC
 
@@ -46,6 +62,7 @@ The pipeline has special steps which allow the software versions used to be repo
 
 **Output directory: `results/multiqc`**
 
+<<<<<<< HEAD
 - `multiqc_report.html`
   - MultiQC report - a standalone HTML file that can be viewed in your web browser
 - `multiqc_data/`
@@ -112,3 +129,11 @@ mapped reads for genomic features. We use it to compute raw count values for eac
   - tab sparated count matrix for all genes and cells.
 - `[CELL]`
   - For each cell, there's a dedicated output directory, containing the raw results and statistics.
+=======
+* `Project_multiqc_report.html`
+  * MultiQC report - a standalone HTML file that can be viewed in your web browser
+* `Project_multiqc_data/`
+  * Directory containing parsed statistics from the different tools used in the pipeline
+
+For more information about how to use MultiQC reports, see [http://multiqc.info](http://multiqc.info)
+>>>>>>> TEMPLATE

@@ -1,4 +1,4 @@
-# nf-core/smartseq bug report
+# nf-core/smartseq2 bug report
 
 Hi there!
 
@@ -35,7 +35,7 @@ A clear and concise description of what you expected to happen.
 
 - Engine: <!-- [e.g. Conda, Docker or Singularity] -->
 - version: <!-- [e.g. 1.0.0] -->
-- Image tag: <!-- [e.g. nfcore/smartseq:1.0.0] -->
+- Image tag: <!-- [e.g. nfcore/smartseq2:1.0.0] -->
 
 ## Additional context
 

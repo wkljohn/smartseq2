@@ -1,4 +1,4 @@
-name: nf-core-smartseq-1.0dev
+name: nf-core-smartseq2-1.0dev
 channels:
   - conda-forge
   - bioconda
