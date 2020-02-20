@@ -1,6 +1,6 @@
-# nf-core/smartseq: Documentation
+# nf-core/smartseq2: Documentation
 
-The nf-core/smartseq documentation is split into the following files:
+The nf-core/smartseq2 documentation is split into the following files:
 
 1. [Installation](https://nf-co.re/usage/installation)
 2. Pipeline configuration

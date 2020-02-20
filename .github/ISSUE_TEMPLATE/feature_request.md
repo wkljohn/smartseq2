@@ -1,4 +1,4 @@
-# nf-core/smartseq feature request
+# nf-core/smartseq2 feature request
 
 Hi there!
 
