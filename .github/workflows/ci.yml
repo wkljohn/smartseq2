@@ -21,7 +21,8 @@ jobs:
           sudo mv nextflow /usr/local/bin/
       - name: Pull docker image
         run: |
-          docker pull nfcore/smartseq2:dev && docker tag nfcore/smartseq2:dev nfcore/smartseq2:dev
+          docker pull nfcore/smartseq2:dev
+          docker tag nfcore/smartseq2:dev nfcore/smartseq2:dev
           docker pull icbi/tracer
           docker pull icbi/bracer
       - name: Run pipeline with test data
