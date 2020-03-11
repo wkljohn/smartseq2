@@ -198,7 +198,7 @@ if (fasta) {
 }
 if (gtf) {
     Channel.fromPath(gtf).into { gtf_star_idx ; gtf_rsem_ref; gtf_feature_counts }
-} 
+}
 
 
 /*
@@ -230,7 +230,7 @@ if (!params.skip_transcriptomics) {
                 FASTA=genome.fa
             fi
             if [[ "${gtf}" == *".gz"* ]]; then
-                gunzip -c ${gtf} > annotation.gtf 
+                gunzip -c ${gtf} > annotation.gtf
                 GTF=annotation.gtf
             fi
 
@@ -279,10 +279,10 @@ if (!params.skip_rsem && !params.skip_transcriptomics) {
                 FASTA=genome.fa
             fi
             if [[ "${gtf}" == *".gz"* ]]; then
-                gunzip -c ${gtf} > annotation.gtf 
+                gunzip -c ${gtf} > annotation.gtf
                 GTF=annotation.gtf
             fi
-            
+
             # make reference
             mkdir rsem
             rsem-prepare-reference --gtf \$GTF \$FASTA rsem/ref
@@ -403,7 +403,7 @@ if (!params.skip_transcriptomics) {
         /**
         * Step 6 - generate final count matrices
         * This additional step is required because of a failure with
-        * "too many open files" when pasting all filese in one go. 
+        * "too many open files" when pasting all filese in one go.
         */
         process make_matrices_fc {
             publishDir "$outdir/featureCounts", mode: "$mode"
@@ -450,7 +450,7 @@ if (!params.skip_transcriptomics) {
             --bam \
             --estimate-rspd \
             --append-names \
-            --output-genome-bam \
+            --single-cell-prior \
             ${in_bam} \
             rsem/\$REF_NAME \
             ${sample_bam}
@@ -479,11 +479,11 @@ if (!params.skip_transcriptomics) {
             paste *_tpm.txt >> \${name}_restpm.txt
             """
         }
-        
+
         /**
         * Step 6 - generate final count matrices
         * This additional step is required because of a failure with
-        * "too many open files" when pasting all filese in one go. 
+        * "too many open files" when pasting all filese in one go.
         */
         process make_matrices_tpm {
             publishDir "$outdir/RSEM", mode: "$mode"
