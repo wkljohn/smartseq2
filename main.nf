@@ -489,17 +489,17 @@ if (!params.skip_transcriptomics) {
             publishDir "$outdir/RSEM", mode: "$mode"
 
             input:
-                file z from result_files_tpm.collect()
-                file a from tpm_files2.collect()
+                file tpm_chunks from result_files_tpm.collect()
+                file tpm_files from tpm_files2.collect()
 
             output:
                 file("resultTPM.txt") into tpm_cr
 
             script:
             """
-            echo "ensemble_id\tgene_id" > header_tpm.txt
-            cut -f 1 ${a.get(0)} | grep -v "^#" | tail -n+2 | sed "s/_/\t/" >> header_tpm.txt
-            paste header_tpm.txt *_restpm.txt > resultTPM.txt
+            echo "gene_id\tgene_symbol" > gene_ids.txt
+            cut -f 1 ${tpm_files.get(0)} | grep -v "^#" | tail -n+2 | sed -E "s/(_PAR_Y)?(_|\$)/\\1\\t/" >> gene_ids.txt
+            paste gene_ids.txt *_restpm.txt > resultTPM.txt
             """
         }
 
