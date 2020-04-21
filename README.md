@@ -2,16 +2,9 @@
 
 **Preprocess scRNA-seq data generated with the Smart-seq2 protocol**.
 
-<<<<<<< HEAD
-[![Build Status](https://travis-ci.com/nf-core/smartseq2.svg?branch=master)](https://travis-ci.com/nf-core/smartseq2)
-=======
-
-> > > > > > > TEMPLATE
-> > > > > > > [![GitHub Actions CI Status](https://github.com/nf-core/smartseq2/workflows/nf-core%20CI/badge.svg)](https://github.com/nf-core/smartseq2/actions)
-> > > > > > > [![GitHub Actions Linting Status](https://github.com/nf-core/smartseq2/workflows/nf-core%20linting/badge.svg)](https://github.com/nf-core/smartseq2/actions)
-> > > > > > > [![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A519.10.0-brightgreen.svg)](https://www.nextflow.io/)
-
-[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg)](http://bioconda.github.io/)
+[![GitHub Actions CI Status](https://github.com/nf-core/smartseq2/workflows/nf-core%20CI/badge.svg)](https://github.com/nf-core/smartseq2/actions)
+[![GitHub Actions Linting Status](https://github.com/nf-core/smartseq2/workflows/nf-core%20linting/badge.svg)](https://github.com/nf-core/smartseq2/actions)
+[![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A519.10.0-brightgreen.svg)](https://www.nextflow.io/)
 [![Docker](https://img.shields.io/docker/automated/nfcore/smartseq2.svg)](https://hub.docker.com/r/nfcore/smartseq2)
 
 ## Introduction
