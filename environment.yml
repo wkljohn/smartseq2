@@ -9,9 +9,7 @@ dependencies:
   - conda-forge::pymdown-extensions=6.0
   - conda-forge::pygments=2.5.2
   - bioconda::star=2.7.1a
-  - bioconda::rsem=1.3.1
+  - bioconda::rsem=1.3.3
   - bioconda::fastqc=0.11.8
-  - bioconda::multiqc=1.7
-  - bioconda::subread=1.6.3
-  - conda-forge::pandoc=2.9.1.1
-  - bioconda::multiqc=1.7
+  - bioconda::multiqc=1.8
+  - bioconda::subread=1.6.4
