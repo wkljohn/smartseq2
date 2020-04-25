@@ -10,7 +10,6 @@
 */
 
 def helpMessage() {
-    // TODO nf-core: Add to this help message with new command line parameters
     log.info nfcoreHeader()
     log.info"""
 
@@ -199,7 +198,7 @@ if (fasta) {
 }
 if (gtf) {
     Channel.fromPath(gtf).into { gtf_star_idx ; gtf_rsem_ref; gtf_feature_counts }
-} 
+}
 
 
 /*
@@ -231,7 +230,7 @@ if (!params.skip_transcriptomics) {
                 FASTA=genome.fa
             fi
             if [[ "${gtf}" == *".gz"* ]]; then
-                gunzip -c ${gtf} > annotation.gtf 
+                gunzip -c ${gtf} > annotation.gtf
                 GTF=annotation.gtf
             fi
 
@@ -280,10 +279,10 @@ if (!params.skip_rsem && !params.skip_transcriptomics) {
                 FASTA=genome.fa
             fi
             if [[ "${gtf}" == *".gz"* ]]; then
-                gunzip -c ${gtf} > annotation.gtf 
+                gunzip -c ${gtf} > annotation.gtf
                 GTF=annotation.gtf
             fi
-            
+
             # make reference
             mkdir rsem
             rsem-prepare-reference --gtf \$GTF \$FASTA rsem/ref
@@ -298,7 +297,7 @@ if (!params.skip_rsem && !params.skip_transcriptomics) {
 
 
 /**
- * Step 1 - FastQC
+ * Step - FastQC
  */
 if (!params.skip_fastqc) {
     process fastqc {
@@ -322,7 +321,7 @@ if (!params.skip_fastqc) {
 
 if (!params.skip_transcriptomics) {
     /**
-    * Step 2 - STAR
+    * Step - STAR
     */
     process STAR {
         label "mid_memory"
@@ -352,7 +351,7 @@ if (!params.skip_transcriptomics) {
 
 
     /**
-    * Step 3a - featureCounts
+    * Step - featureCounts
     */
     if(!params.skip_fc) {
         process featureCounts {
@@ -378,7 +377,7 @@ if (!params.skip_transcriptomics) {
         }
 
         /**
-        * Step 5a summarize featureCounts
+        * Step - summarize featureCounts
         */
         process summarize_FC {
             input:
@@ -402,9 +401,9 @@ if (!params.skip_transcriptomics) {
         }
 
         /**
-        * Step 6 - generate final count matrices
+        * Step - generate final count matrices
         * This additional step is required because of a failure with
-        * "too many open files" when pasting all filese in one go. 
+        * "too many open files" when pasting all filese in one go.
         */
         process make_matrices_fc {
             publishDir "$outdir/featureCounts", mode: "$mode"
@@ -429,7 +428,7 @@ if (!params.skip_transcriptomics) {
 
 
     /**
-    * Step 3b - RSEM
+    * Step - RSEM
     */
     if(!params.skip_rsem) {
         process rsem {
@@ -451,7 +450,7 @@ if (!params.skip_transcriptomics) {
             --bam \
             --estimate-rspd \
             --append-names \
-            --output-genome-bam \
+            --single-cell-prior \
             ${in_bam} \
             rsem/\$REF_NAME \
             ${sample_bam}
@@ -459,7 +458,7 @@ if (!params.skip_transcriptomics) {
         }
 
         /**
-        * Step 5b - summarize RSEM TPM
+        * Step - summarize RSEM TPM
         */
         process summmarize_TPM {
             input:
@@ -480,27 +479,27 @@ if (!params.skip_transcriptomics) {
             paste *_tpm.txt >> \${name}_restpm.txt
             """
         }
-        
+
         /**
-        * Step 6 - generate final count matrices
+        * Step - generate final count matrices
         * This additional step is required because of a failure with
-        * "too many open files" when pasting all filese in one go. 
+        * "too many open files" when pasting all filese in one go.
         */
         process make_matrices_tpm {
             publishDir "$outdir/RSEM", mode: "$mode"
 
             input:
-                file z from result_files_tpm.collect()
-                file a from tpm_files2.collect()
+                file tpm_chunks from result_files_tpm.collect()
+                file tpm_files from tpm_files2.collect()
 
             output:
                 file("resultTPM.txt") into tpm_cr
 
             script:
             """
-            echo "ensemble_id\tgene_id" > header_tpm.txt
-            cut -f 1 ${a.get(0)} | grep -v "^#" | tail -n+2 | sed "s/_/\t/" >> header_tpm.txt
-            paste header_tpm.txt *_restpm.txt > resultTPM.txt
+            echo "gene_id\tgene_symbol" > gene_ids.txt
+            cut -f 1 ${tpm_files.get(0)} | grep -v "^#" | tail -n+2 | sed -E "s/(_PAR_Y)?(_|\$)/\\1\\t/" >> gene_ids.txt
+            paste gene_ids.txt *_restpm.txt > resultTPM.txt
             """
         }
 
@@ -513,40 +512,12 @@ if (!params.skip_transcriptomics) {
     bam_mqc = Channel.from(false)
 }
 
-/**
- * Step 4
- */
-process multiqc {
-    publishDir "$outdir/multiqc", mode: "$mode"
-
-    input:
-    file (mqc_custom_config) from ch_multiqc_custom_config.collect().ifEmpty([])
-    file ('fastqc/*') from fastqc_files.collect().ifEmpty([])
-    file ('star/*') from bam_mqc.collect().ifEmpty([])
-    file ('featureCounts/*') from count_mqc.collect().ifEmpty([])
-    file ('rsem/*') from rsem_mqc.collect().ifEmpty([])
-    file ('software_versions/*') from ch_software_versions_yaml.collect()
-    file workflow_summary from ch_workflow_summary.collectFile(name: "workflow_summary_mqc.yaml")
-
-    output:
-    file "multiqc_report.html" into multiqc_report
-    file "multiqc_data"
-
-    script:
-    rtitle = custom_runName ? "--title \"$custom_runName\"" : ''
-    rfilename = custom_runName ? "--filename " + custom_runName.replaceAll('\\W','_').replaceAll('_+','_') + "_multiqc_report" : ''
-    custom_config_file = params.multiqc_config ? "--config $mqc_custom_config" : ''
-    """
-    multiqc -f $rtitle $rfilename $custom_config_file .
-    """
-}
-
 
 
 if (!params.skip_tracer) {
     if (workflow.profile.contains("docker") || workflow.profile.contains("singularity")) {
         /**
-        * Step 7 - run TraCeR
+        * Step - run TraCeR
         */
         process TraCeR{
             label "tracer"
@@ -567,7 +538,7 @@ if (!params.skip_tracer) {
 
 
         /**
-        * Step 8 - summarize TraCeR results
+        * Step - summarize TraCeR results
         */
         process TCR_summary{
             label "tracer"
@@ -593,7 +564,7 @@ if (!params.skip_tracer) {
 if (!params.skip_bracer) {
     if (workflow.profile.contains("docker") || workflow.profile.contains("singularity")) {
         /**
-        * Step 9 - run BraCeR
+        * Step - run BraCeR
         */
         process BraCeR{
             label "bracer"
@@ -614,7 +585,7 @@ if (!params.skip_bracer) {
 
 
         /**
-        * Step 10 - summarize BraCeR results
+        * Step - summarize BraCeR results
         */
         process BCR_summary{
             label "bracer"
@@ -637,28 +608,11 @@ if (!params.skip_bracer) {
 }
 
 
+
+
+
 /***** END ACTUAL PIPELINE **************/
 /***** START NF-CORE OUTPUT BOILERPLATE */
-
-
-
-/*
- * FINAL STEP - Output Description HTML
- */
-process output_documentation {
-    publishDir "${params.outdir}/pipeline_info", mode: 'copy'
-
-    input:
-    file "output_docs.md" from ch_output_docs
-
-    output:
-    file "results_description.html"
-
-    script:
-    """
-    pandoc output_docs.md -o results_description.html --self-contained --standalone
-    """
-}
 
 /*
  * Parse software version numbers
@@ -669,6 +623,8 @@ process get_software_versions {
                       if (filename.indexOf(".csv") > 0) filename
                       else null
                 }
+    input:
+    file output_docs from ch_output_docs
 
     output:
     file 'software_versions_mqc.yaml' into ch_software_versions_yaml
@@ -683,6 +639,34 @@ process get_software_versions {
     multiqc --version > v_multiqc.txt
     scrape_software_versions.py &> software_versions_mqc.yaml
     markdown_to_html.py $output_docs -o results_description.html
+    """
+}
+
+/**
+ * Step - MultiQC 
+ */
+process multiqc {
+    publishDir "$outdir/multiqc", mode: "$mode"
+
+    input:
+    file (mqc_custom_config) from ch_multiqc_custom_config.collect().ifEmpty([])
+    file ('fastqc/*') from fastqc_files.collect().ifEmpty([])
+    file ('star/*') from bam_mqc.collect().ifEmpty([])
+    file ('featureCounts/*') from count_mqc.collect().ifEmpty([])
+    file ('rsem/*') from rsem_mqc.collect().ifEmpty([])
+    file ('software_versions/*') from ch_software_versions_yaml.collect()
+    file workflow_summary from ch_workflow_summary.collectFile(name: "workflow_summary_mqc.yaml")
+
+    output:
+    file "multiqc_report.html" into multiqc_report
+    file "multiqc_data"
+
+    script:
+    rtitle = custom_runName ? "--title \"$custom_runName\"" : ''
+    rfilename = custom_runName ? "--filename " + custom_runName.replaceAll('\\W','_').replaceAll('_+','_') + "_multiqc_report" : ''
+    custom_config_file = params.multiqc_config ? "--config $mqc_custom_config" : ''
+    """
+    multiqc -f $rtitle $rfilename $custom_config_file .
     """
 }
 
