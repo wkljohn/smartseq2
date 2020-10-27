@@ -54,4 +54,4 @@ These tests are run both with the latest available version of `Nextflow` and als
 
 ## Getting help
 
-For further information/help, please consult the [nf-core/smartseq2 documentation](https://nf-co.re/smartseq2/docs) and don't hesitate to get in touch on the nf-core Slack [#smartseq2](https://nfcore.slack.com/channels/smartseq2) channel ([join our Slack here](https://nf-co.re/join/slack)).
+For further information/help, please consult the [nf-core/smartseq2 documentation](https://nf-co.re/smartseq2/usage) and don't hesitate to get in touch on the nf-core Slack [#smartseq2](https://nfcore.slack.com/channels/smartseq2) channel ([join our Slack here](https://nf-co.re/join/slack)).

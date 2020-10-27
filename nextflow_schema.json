@@ -1,5 +1,5 @@
 {
-    "$schema": "https://json-schema.org/draft-07/schema",
+    "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "https://raw.githubusercontent.com/nf-core/smartseq2/master/nextflow_schema.json",
     "title": "nf-core/smartseq2 pipeline parameters",
     "description": "Preprocess scRNA-seq data generated with the SmartSeq2 protocol",
@@ -101,7 +101,7 @@
                         "link",
                         "copy",
                         "copyNoFollow",
-                        "mov"
+                        "move"
                     ]
                 },
                 "name": {
