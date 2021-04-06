@@ -312,7 +312,7 @@ if (!params.skip_fastqc) {
         """
         fastqc  \
         -t ${task.cpus} \
-        ${in_fastq.get(0)}
+        ${in_fastq}
         """
     }
 }
