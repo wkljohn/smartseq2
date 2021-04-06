@@ -312,8 +312,7 @@ if (!params.skip_fastqc) {
         """
         fastqc  \
         -t ${task.cpus} \
-        ${in_fastq.get(0)} \
-        ${in_fastq.get(1)}
+        ${in_fastq.get(0)}
         """
     }
 }
@@ -342,7 +341,7 @@ if (!params.skip_transcriptomics) {
             TMP="--readFilesCommand zcat"
         fi
         STAR --runThreadN ${task.cpus} --genomeDir star \$TMP \
-                --readFilesIn ${in_fastq.get(0)} ${in_fastq.get(1)} \
+                --readFilesIn ${in_fastq.get(0)} \
                 --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 16000000000 --outSAMunmapped Within \
                 --twopassMode Basic --outFilterMultimapNmax 1 --quantMode TranscriptomeSAM \
                 --outFileNamePrefix "${sample_fq}."
