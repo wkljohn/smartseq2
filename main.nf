@@ -122,7 +122,7 @@ if(params.readPaths){
         .into { read_files_fastqc; read_files_star; read_files_bracer; read_files_tracer }
 } else {
     Channel
-        .fromFilePairs( params.reads, size: 2 )
+        .fromFilePairs( params.reads, size: 1 )
         .ifEmpty { exit 1, "Cannot find any reads matching: ${params.reads}\nNB: Path needs to be enclosed in quotes!" }
         .into { read_files_fastqc; read_files_star; read_files_bracer; read_files_tracer }
 }
