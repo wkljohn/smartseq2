@@ -337,11 +337,11 @@ if (!params.skip_transcriptomics) {
         script:
         """
         TMP=""
-        if [[ "${in_fastq.get(0)}" == *".gz"* ]]; then
+        if [[ "${in_fastq}" == *".gz"* ]]; then
             TMP="--readFilesCommand zcat"
         fi
         STAR --runThreadN ${task.cpus} --genomeDir star \$TMP \
-                --readFilesIn ${in_fastq.get(0)} \
+                --readFilesIn ${in_fastq} \
                 --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 16000000000 --outSAMunmapped Within \
                 --twopassMode Basic --outFilterMultimapNmax 1 --quantMode TranscriptomeSAM \
                 --outFileNamePrefix "${sample_fq}."
