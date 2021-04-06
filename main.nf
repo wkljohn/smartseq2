@@ -649,7 +649,7 @@ process multiqc {
 
     input:
     file (mqc_custom_config) from ch_multiqc_custom_config.collect().ifEmpty([])
-    //file ('fastqc/*') from fastqc_files.collect().ifEmpty([])
+    file ('fastqc/*') from fastqc_files.collect().ifEmpty([])
     file ('star/*') from bam_mqc.collect().ifEmpty([])
     file ('featureCounts/*') from count_mqc.collect().ifEmpty([])
     file ('rsem/*') from rsem_mqc.collect().ifEmpty([])
