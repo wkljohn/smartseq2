@@ -445,7 +445,7 @@ if (!params.skip_transcriptomics) {
             """
             REF_FILENAME=\$(basename rsem/*.grp)
             REF_NAME="\${REF_FILENAME%.*}"
-            rsem-calculate-expression -p ${task.cpus} --paired-end \
+            rsem-calculate-expression -p ${task.cpus} \
             --bam \
             --estimate-rspd \
             --append-names \
