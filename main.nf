@@ -416,7 +416,7 @@ if (!params.skip_transcriptomics) {
 
             script:
             """
-            cut -f 1 ${y.get(0)} | grep -v "^#" > header_fc.txt
+            cut -f 1 ${y} | grep -v "^#" > header_fc.txt
             paste header_fc.txt *_resfc.txt > resultCOUNT.txt
             """
         }
@@ -497,7 +497,7 @@ if (!params.skip_transcriptomics) {
             script:
             """
             echo "gene_id\tgene_symbol" > gene_ids.txt
-            cut -f 1 ${tpm_files.get(0)} | grep -v "^#" | tail -n+2 | sed -E "s/(_PAR_Y)?(_|\$)/\\1\\t/" >> gene_ids.txt
+            cut -f 1 ${tpm_files} | grep -v "^#" | tail -n+2 | sed -E "s/(_PAR_Y)?(_|\$)/\\1\\t/" >> gene_ids.txt
             paste gene_ids.txt *_restpm.txt > resultTPM.txt
             """
         }
