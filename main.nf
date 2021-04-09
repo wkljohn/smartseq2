@@ -351,6 +351,8 @@ if (!params.skip_transcriptomics) {
 
     /**
     * Step - featureCounts
+    * originally: featureCounts -t exon -T ${task.cpus} \
+    * for nucleiseq: featureCounts -t gene -T ${task.cpus} 
     */
     if(!params.skip_fc) {
         process featureCounts {
@@ -366,7 +368,7 @@ if (!params.skip_transcriptomics) {
 
             script:
             """
-            featureCounts -t exon -T ${task.cpus} \
+            featureCounts -t gene -T ${task.cpus} \
             -g gene_name \
             -a ${anno_file} \
             -o ${sample}.count.txt \
