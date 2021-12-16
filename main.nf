@@ -341,8 +341,8 @@ if (!params.skip_transcriptomics) {
         if [[ "${in_fastq}" == *".gz"* ]]; then
             TMP="--readFilesCommand zcat"
         fi
-        STAR --runThreadN ${task.cpus} --genomeDir star \$TMP \
-                --alignIntronMax 1 \
+        STAR --runThreadN ${task.cpus} --genomeDir star \$TMP 
+                --soloType SmartSeq --soloUMIdedup Exact --soloFeatures GeneFull \
                 --readFilesIn ${in_fastq} \
                 --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 16000000000 --outSAMunmapped Within \
                 --twopassMode Basic --outFilterMultimapNmax 1 --quantMode TranscriptomeSAM \
