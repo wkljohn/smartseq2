@@ -320,7 +320,8 @@ if (!params.skip_fastqc) {
 
 if (!params.skip_transcriptomics) {
     /**
-    * Step - STAR
+    * Step - STAR 
+    * --alignIntronMax 1 is important for single nuclei
     */
     process STAR {
         label "mid_memory"
@@ -341,6 +342,7 @@ if (!params.skip_transcriptomics) {
             TMP="--readFilesCommand zcat"
         fi
         STAR --runThreadN ${task.cpus} --genomeDir star \$TMP \
+                --alignIntronMax 1 \
                 --readFilesIn ${in_fastq} \
                 --outSAMtype BAM SortedByCoordinate --limitBAMsortRAM 16000000000 --outSAMunmapped Within \
                 --twopassMode Basic --outFilterMultimapNmax 1 --quantMode TranscriptomeSAM \
