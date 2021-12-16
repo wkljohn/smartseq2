@@ -203,7 +203,6 @@ if (gtf) {
 
 /*
  * PREPROCESSING - Build STAR index
- * skip   --sjdbGTFfile \$GTF for exome \\
  */
 if (!params.skip_transcriptomics) {
     if (!params.star_index && fasta) {
@@ -240,6 +239,7 @@ if (!params.skip_transcriptomics) {
             STAR \\
                 --runMode genomeGenerate \\
                 --runThreadN ${task.cpus} \\
+                --sjdbGTFfile \$GTF for exome \\
                 --genomeDir star/ \\
                 --genomeFastaFiles \$FASTA \\
                 $avail_mem
